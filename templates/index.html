@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #2c5d6a, #265a99);
+            background-size: cover;
+            animation: gradientAnimation 8s infinite alternate;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(to right, #2c5d6a, #265a99); }
+            100% { background: linear-gradient(to right, #2e297a, #bfe9ff); }
+        }
+        .container {
+            width: 800px;
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        textarea {
+            width: 90%; 
+            height: 150px; 
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            margin-bottom: 10px; 
+        } 
+        button {
+            display: block;
+            width: 40%; 
+            margin: 10px auto; 
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            background-color: #81712e;
+            color: black;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ffaa00;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+        .result-box {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease-in, transform 0.3s ease-in;
+        }
+        .show-result {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .positive { color: #3cf053; }
+        .negative { color: #ff4f4f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💬 Sentiment Analyzer</h1>
+        <p class="description">Enter a review and find out the sentiment!</p>
+
+        <form method="POST" onsubmit="analyzeSentiment(event)">
+            <textarea id="userInput" placeholder="Type your review here..." required></textarea>
+            <button type="submit" id="analyze-btn">🔍 Analyze</button>
+        </form>
+
+        <div id="resultBox" class="result-box" style="display:none;">
+            <h2>Result: <span id="resultText"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        function analyzeSentiment(event) {
+            event.preventDefault();  
+            let userText = document.getElementById("userInput").value;
+            let resultBox = document.getElementById("resultBox");
+            let resultText = document.getElementById("resultText");
+
+            let sentiment = userText.includes("good") || userText.includes("happy") ? "Positive 😊" : "Negative 😠";
+
+            resultText.textContent = sentiment;
+            resultText.className = sentiment.includes("Positive") ? "positive" : "negative";
+            resultBox.style.display = "block"; 
+            resultBox.classList.add("show-result"); 
+        }
+    </script>
+</body>
+</html>
